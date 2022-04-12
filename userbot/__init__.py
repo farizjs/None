@@ -233,8 +233,7 @@ async def send_alive_status():
             "**Bot is up and running!**\n\n"
             f"**Telethon:** {version.__version__}\n"
             f"**Python:** {python_version()}\n"
-            f"**User:** {bot.get_me().first_name} or 'Set `ALIVE_NAME` ConfigVar!'"
-        )
+            f"**User:** {bot.get_me().first_name} or 'Set `ALIVE_NAME` ConfigVar!'")
         await bot.send_message(BOTLOG_CHATID, message)
         return True
 
