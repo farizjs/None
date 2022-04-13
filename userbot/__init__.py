@@ -96,6 +96,8 @@ STRING_SESSION = os.environ.get("STRING_SESSION", None)
 # Logging channel/group ID configuration.
 BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID", 0))
 
+BOT_VER = "0.1.0"
+
 HANDLER = os.environ.get("HANDLER") or "."
 SUDO_HANDLER = os.environ.get("SUDO_HANDLER") or "$"
 
@@ -310,6 +312,18 @@ with bot:
         dugmeler = CMD_HELP
         me = bot.get_me()
         uid = me.id
+        main_help_button = [
+            [
+                Button.url("Settings ⚙️", f"t.me/{BOT_USERNAME}?start=set"),
+                Button.inline("Vc Menu ⚙️", data="flicks_inline"),
+            ],
+            [
+                Button.inline("Help Menu", data="open"),
+                Button.inline("Owner Menu", data="ownrmn"),
+            ],
+            [Button.inline("Close", data="close")],
+        ]
+
 
         @tgbot.on(events.NewMessage(pattern="/start"))
         async def handler(event):
@@ -318,6 +332,46 @@ with bot:
             else:
                 await event.reply(f"Hey there {ALIVE_NAME}\n\nI work for you :)")
 
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"get_back")
+            )
+        )
+        async def on_plug_in_callback_query_handler(event):
+            if event.query.user_id == uid:
+                current_page_number = int(lockpage)
+                buttons = paginate_help(current_page_number, plugins, "helpme")
+                text = f"\n📚 **Inline Help Menu!**\n\n **Master​** {ALIVE_NAME}\n\n** Branch :** Flicks-Userbot\n** ᴠᴇʀsɪᴏɴ :** `v{BOT_VER}`\n** Plugins :** `{len(plugins)}`\n"
+                await event.edit(
+                    text,
+                    file=ALIVE_LOGO,
+                    buttons=buttons,
+                    link_preview=False,
+                )
+            else:
+                reply_pop_up_alert = f"You are Not allowed, this Userbot Belongs {ALIVE_NAME}"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"open")
+            )
+        )
+        async def on_plug_in_callback_query_handler(event):
+            if event.query.user_id == uid:
+                buttons = paginate_help(0, plugins, "helpme")
+                text = f"\n📚 **Inline Help Menu!**\n\n **Master​** {ALIVE_NAME}\n\n** Branch :** Flicks-Userbot\n** ᴠᴇʀsɪᴏɴ :** `v{BOT_VER}`\n** Plugins :** `{len(plugins)}`\n"
+                await event.edit(
+                    text,
+                    file=ALIVE_LOGO,
+                    buttons=buttons,
+                    link_preview=False,
+                )
+            else:
+                reply_pop_up_alert = f"You are Not allowed, this Userbot Belongs {ALIVE_NAME}"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+
         @tgbot.on(events.InlineQuery)  # pylint:disable=E0602
         async def inline_handler(event):
             builder = event.builder
@@ -325,14 +379,13 @@ with bot:
             query = event.text
             if event.query.user_id == uid and query.startswith("xflicks"):
                 buttons = paginate_help(0, dugmeler, "helpme")
-                result = builder.article(
-                    "Please Use Only With .help Command",
-                    text="{}\nTotal loaded modules: {}".format(
-                        "UserButt modules helper.\n",
+                result = builder.photo(
+                    file=ALIVE_LOGO,
+                    link_preview=False,
+                    text=f"\n**Flicks-Userbot**\n\n✥**Mᴀsᴛᴇʀ​** {ALIVE_NAME}\n\n✥**ʙʀᴀɴᴄʜ :** Flicks-Userbot\n✥**ᴠᴇʀsɪᴏɴ :** {BOT_VER}\n✥**Plugins** : {len(plugins)}".format(
                         len(dugmeler),
                     ),
-                    buttons=buttons,
-                    link_preview=False,
+                    buttons=main_help_button,
                 )
             elif query.startswith("tb_btn"):
                 result = builder.article(
@@ -342,16 +395,16 @@ with bot:
                     link_preview=True)
             else:
                 result = builder.article(
-                    "UserButt",
+                    "Flicks Project",
                     text="""You can convert your account to bot and use them. Remember, you can't manage someone else's bot! All installation details are explained from GitHub address below.""",
                     buttons=[
                         [
                             custom.Button.url(
                                 "GitHub Repo",
-                                "https://github.com/mrmissx/userbutt"),
+                                "https://github.com/farizjs/FlicksProject"),
                             custom.Button.url(
                                 "Support",
-                                "https://t.me/UserBotIndo")],
+                                "https://t.me/FlicksSupport")],
                     ],
                     link_preview=False,
                 )
