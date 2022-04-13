@@ -79,15 +79,25 @@ if CONFIG_CHECK:
     quit(1)
 
 # Telegram App KEY and HASH
-API_KEY = os.environ.get("API_KEY")
+API_KEY = os.environ.get("API_ID")
 API_HASH = os.environ.get("API_HASH")
 
+# =====================================================================
+SUDO_USERS = {
+    int(x) for x in os.environ.get(
+        "SUDO_USERS",
+        "").split()}
+BL_CHAT = {int(x) for x in os.environ.get("BL_CHAT", "").split()}
+# =====================================================================
 
 # Userbot Session String
 STRING_SESSION = os.environ.get("STRING_SESSION", None)
 
 # Logging channel/group ID configuration.
 BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID", 0))
+
+HANDLER = os.environ.get("HANDLER") or "."
+SUDO_HANDLER = os.environ.get("SUDO_HANDLER") or "$"
 
 # Userbot logging feature switch.
 LOGSPAMMER = sb(
@@ -215,6 +225,13 @@ else:
     bot = TelegramClient("userbot", API_KEY, API_HASH)
 
 
+    tgbot = TelegramClient(
+        "TG_BOT_TOKEN",
+        api_id=API_KEY,
+        api_hash=API_HASH).start(
+        bot_token=BOT_TOKEN)
+
+
 async def check_botlog_chatid():
     if not BOTLOG_CHATID:
         return
@@ -239,10 +256,12 @@ async def send_alive_status():
 
 
 # Global Variables
+CMD_LIST = {}
 COUNT_MSG = 0
 USERS = {}
 COUNT_PM = {}
 LASTMSG = {}
+LOAD_PLUG = {}
 CMD_HELP = {}
 ISAFK = False
 AFKREASON = None
@@ -280,11 +299,6 @@ def paginate_help(page_number, loaded_modules, prefix):
 
 with bot:
     try:
-        tgbot = TelegramClient(
-            "TG_BOT_TOKEN",
-            api_id=API_KEY,
-            api_hash=API_HASH).start(
-            bot_token=BOT_TOKEN)
 
         dugmeler = CMD_HELP
         me = bot.get_me()
