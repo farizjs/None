@@ -11,7 +11,7 @@ from telethon import events
 
 from userbot import (
     BL_CHAT,
-    CMD_HANDLER,
+    HANDLER,
     CMD_LIST,
     LOAD_PLUG,
     SUDO_HANDLER,
@@ -53,7 +53,7 @@ def flicks_cmd(
         ):
             flicks_reg = sudo_reg = re.compile(pattern)
         else:
-            flicks_ = "\\" + CMD_HANDLER
+            flicks_ = "\\" + HANDLER
             sudo_ = "\\" + SUDO_HANDLER
             flicks_reg = re.compile(flicks_ + pattern)
             sudo_reg = re.compile(sudo_ + pattern)
