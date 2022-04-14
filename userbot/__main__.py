@@ -9,7 +9,7 @@ from importlib import import_module
 from sys import argv
 
 from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
-from userbot import LOGS, bot, BOTLOG_CHATID
+from userbot import LOGS, bot, BOTLOG_CHATID, ALIVE_NAME
 from userbot.modules import ALL_MODULES
 
 
@@ -28,14 +28,24 @@ for module_name in ALL_MODULES:
 
 LOGS.info(
     "Congratulations, your userbot is now running !!"
-    "Test it by type .on or .alive in any chat."
-    "for further assistance, head to https://t.me/userbotindo")
+    "\nTelethon: {version.__version__}"
+    "\nPython: {python_version()}")
 
 if not BOTLOG_CHATID:
     LOGS.warning(
         "Yout BOTLOG_CHATID isn't set yet."
         "this variable is highly recomended to fill to make sure"
         "all errors go to your log chat not current chat and considered as a spammer.")
+
+async def send_alive_status():
+    if BOTLOG_CHATID:
+        message = (
+            "**Bot is up and running!**\n\n"
+            f"**Telethon:** {version.__version__}\n"
+            f"**Python:** {python_version()}\n"
+            f"**User:** {ALIVE_NAME} !!'")
+        await bot.send_message(BOTLOG_CHATID, message)
+        return True
 
 
 if len(argv) not in (1, 3, 4):
