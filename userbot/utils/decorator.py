@@ -21,7 +21,7 @@ from userbot import (
 )
 
 
-def flicks_cmd(
+def glx_cmd(
     pattern: str = None,
     allow_sudo: bool = True,
     disable_edited: bool = False,
@@ -44,25 +44,25 @@ def flicks_cmd(
         args["chats"] = black_list_chats
 
     if pattern is not None:
-        global flicks_reg
+        global glx_reg
         global sudo_reg
         if (
             pattern.startswith(r"\#")
             or not pattern.startswith(r"\#")
             and pattern.startswith(r"^")
         ):
-            flicks_reg = sudo_reg = re.compile(pattern)
+            glx_reg = sudo_reg = re.compile(pattern)
         else:
-            flicks_ = "\\" + HANDLER
+            glx_ = "\\" + HANDLER
             sudo_ = "\\" + SUDO_HANDLER
-            flicks_reg = re.compile(flicks_ + pattern)
+            glx_reg = re.compile(glx_ + pattern)
             sudo_reg = re.compile(sudo_ + pattern)
             if command is not None:
-                cmd1 = flicks_ + command
+                cmd1 = glx_ + command
                 cmd2 = sudo_ + command
             else:
                 cmd1 = (
-                    (flicks_ +
+                    (glx_ +
                      pattern).replace(
                         "$",
                         "").replace(
@@ -85,9 +85,9 @@ def flicks_cmd(
         if not disable_edited:
             bot.add_event_handler(
                 func, events.MessageEdited(
-                    **args, outgoing=True, pattern=flicks_reg))
+                    **args, outgoing=True, pattern=glx_reg))
         bot.add_event_handler(
-            func, events.NewMessage(**args, outgoing=True, pattern=flicks_reg)
+            func, events.NewMessage(**args, outgoing=True, pattern=glx_reg)
         )
         if allow_sudo:
             if not disable_edited:
@@ -112,7 +112,7 @@ def flicks_cmd(
     return decorator
 
 
-def flicks_handler(
+def glx_handler(
     **args,
 ):
     def decorator(func):
