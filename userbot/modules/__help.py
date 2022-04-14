@@ -8,7 +8,7 @@
 
 from telethon import Button
 
-from . import BOT_USERNAME, CMD_HANDLER, CMD_HELP, bot, glx_cmd
+from . import BOT_USERNAME, HANDLER, CMD_HELP, bot, glx_cmd
 
 user = bot.get_me()
 DEFAULTUSER = user.first_name
@@ -35,5 +35,5 @@ async def cmd_list(event):
             await event.delete()
         except BaseException:
             await event.edit(
-                f"** Looks like this chat or bot doesn't support inline mode.\nFor an alternative, use the command\n👉`{CMD_HANDLER}plugins`**"
+                f"** Looks like this chat or bot doesn't support inline mode.\nFor an alternative, use the command\n👉`{HANDLER}plugins`**"
             )
