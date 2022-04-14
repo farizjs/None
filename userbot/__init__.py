@@ -308,7 +308,7 @@ with bot:
         @tgbot.on(events.NewMessage(pattern="/start"))
         async def handler(event):
             if event.message.from_id != uid:
-                await event.reply("Hey there!, this is Galaxy Assistant of {ALIVE_NAME}!\n\n you can chat {ALIVE_NAME} with me!")
+                await event.reply(f"Hey there!, this is Galaxy Assistant of {ALIVE_NAME}!\n\n you can chat {ALIVE_NAME} with me!")
             else:
                 await event.reply(f"Hey there {ALIVE_NAME}\n\nI work for you :)")
 
