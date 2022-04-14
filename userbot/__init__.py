@@ -542,22 +542,29 @@ Voice chat group menu for {ALIVE_NAME}
             if event.query.user_id == uid:
                 text = (
                     """
-  •  Syntax : .play <Judul Lagu/Link YT>
-  •  Function : Untuk Memutar Lagu di voice chat group dengan akun kamu
-  •  Syntax : .vplay <Judul Video/Link YT>
-  •  Function : Untuk Memutar Video di voice chat group dengan akun kamu
-  •  Syntax : .end
-  •  Function : Untuk Memberhentikan video/lagu yang sedang putar di voice chat group
-  •  Syntax : .skip
-  •  Function : Untuk Melewati video/lagu yang sedang di putar
-  •  Syntax : .pause
-  •  Function : Untuk memberhentikan video/lagu yang sedang diputar
-  •  Syntax : .resume
-  •  Function : Untuk melanjutkan pemutaran video/lagu yang sedang diputar
-  •  Syntax : .volume 1-200
-  •  Function : Untuk mengubah volume (Membutuhkan Hak admin)
-  •  Syntax : .playlist
-  •  Function : Untuk menampilkan daftar putar Lagu/Video
+Command: .play <song title / link yt>
+Usage: To play songs on Voice Chat Group with your account
+
+Command: .vplay <video title / YT link>
+Usage: To play videos on Voice Chat Group with your account
+
+Command: .end
+Usage: To stop the video / song that is playing at Voice Chat Group
+
+Command: .skip
+Usage: To pass videos / songs that are being played
+
+Command: .pause
+Usage: To stop the video / song that is playing
+
+Command: .resume
+Usage: To continue playing videos / songs that are playing
+
+Command: .volume 1-200
+Usage: To change the volume (requires admin rights)
+
+Command: .playlist
+Usage: To display playlists of songs / videos
 """)
                 await event.edit(
                     text,
@@ -579,10 +586,10 @@ Voice chat group menu for {ALIVE_NAME}
                     """
 Plugin: VcTools.
 
-Command: .startvc.
+Command: .startvc
 Usage: to start voice chat group
 
-Command: .stopvc.
+Command: .stopvc
 Usage: To stop Voice Chat Group
 
 Command: .vctitle <title VCG>
@@ -591,10 +598,10 @@ Usage: To change the title / title Voice Chat Group
 Command: .vcinvite.
 Usage: invite member group to Voice Chat Group
 
-Command: .joinvc.
+Command: .joinvc
 Usage: for JOIN VC Group
 
-Command: .leavevc.
+Command: .leavevc
 Usage: To get off VC Group
 """)
                 await event.edit(
