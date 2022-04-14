@@ -153,13 +153,13 @@ ANTI_SPAMBOT = sb(os.environ.get("ANTI_SPAMBOT", "False"))
 ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT", "False"))
 
 # Default .alive name
-ALIVE_NAME = os.environ.get("ALIVE_NAME", None)
+ALIVE_NAME = os.environ.get("ALIVE_NAME", "glx")
 
 # Default .alive logo
-ALIVE_LOGO = os.environ.get("ALIVE_LOGO", None)
+ALIVE_LOGO = os.environ.get("ALIVE_LOGO", "https://telegra.ph/file/a61b3065d139ef6d620f1.jpg")
 
 # Time & Date - Country and Time Zone
-COUNTRY = str(os.environ.get("COUNTRY", ""))
+COUNTRY = str(os.environ.get("COUNTRY", "id"))
 TZ_NUMBER = int(os.environ.get("TZ_NUMBER", 1))
 
 # Clean Welcome
@@ -167,7 +167,7 @@ CLEAN_WELCOME = sb(os.environ.get("CLEAN_WELCOME", "True"))
 
 # Last.fm Module
 BIO_PREFIX = os.environ.get("BIO_PREFIX", None)
-DEFAULT_BIO = os.environ.get("DEFAULT_BIO", None)
+DEFAULT_BIO = os.environ.get("DEFAULT_BIO", "404 Not Found")
 LASTFM_API = os.environ.get("LASTFM_API", None)
 LASTFM_SECRET = os.environ.get("LASTFM_SECRET", None)
 LASTFM_USERNAME = os.environ.get("LASTFM_USERNAME", None)
@@ -190,7 +190,7 @@ TEMP_DOWNLOAD_DIRECTORY = os.environ.get(
     "TMP_DOWNLOAD_DIRECTORY", "./downloads/")
 
 # Terminal alias
-TERM_ALIAS = os.environ.get("TERM_ALIAS", "UserButt")
+TERM_ALIAS = os.environ.get("TERM_ALIAS", "Galaxy")
 
 # Zipfile module
 ZIP_DOWNLOAD_DIRECTORY = os.environ.get("ZIP_DOWNLOAD_DIRECTORY", "./zips")
@@ -233,28 +233,6 @@ else:
         api_hash=API_HASH).start(
         bot_token=BOT_TOKEN)
 
-
-async def check_botlog_chatid():
-    if not BOTLOG_CHATID:
-        return
-
-    entity = await bot.get_entity(BOTLOG_CHATID)
-    if entity.default_banned_rights.send_messages:
-        LOGS.info(
-            "Your account doesn't have rights to send messages to BOTLOG_CHATID "
-            "group. Check if you typed the Chat ID correctly.")
-        quit(1)
-
-
-async def send_alive_status():
-    if BOTLOG_CHATID:
-        message = (
-            "**Bot is up and running!**\n\n"
-            f"**Telethon:** {version.__version__}\n"
-            f"**Python:** {python_version()}\n"
-            f"**User:** {bot.get_me().first_name} or 'Set `ALIVE_NAME` ConfigVar!'")
-        await bot.send_message(BOTLOG_CHATID, message)
-        return True
 
 
 # Global Variables
@@ -696,16 +674,3 @@ Usage: To get off VC Group
             "Support for inline is disabled on your bot. "
             "To enable it, define a bot token and enable inline mode on your bot. "
             "If you think there is a problem other than this, contact us.")
-    try:
-        bot.loop.run_until_complete(check_botlog_chatid())
-    except BaseException:
-        LOGS.info(
-            "BOTLOG_CHATID environment variable isn't a "
-            "valid entity. Check your environment variables/config.env file."
-        )
-        quit(1)
-
-    try:
-        bot.loop.run_until_complete(send_alive_status())
-    except BaseException:
-        pass
