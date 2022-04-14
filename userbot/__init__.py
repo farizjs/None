@@ -419,10 +419,10 @@ with bot:
             if event.query.user_id == uid:  # @Flicasyncks_Userbot
                 # https://t.me/TelethonChat/115200
                 text = (
-                    f"\n**Usᴇʀʙᴏᴛ Tᴇʟᴇɢʀᴀᴍ**\n\n **Mᴀsᴛᴇʀ** {ALIVE_NAME}\n\n** Bʀᴀɴᴄʜ :** Flicks-Userbot\n** Vᴇʀsɪ :** `v{BOT_VER}`\n** Pʟᴜɢɪɴs :** `{len(plugins)}`\n")
+                    f"\n**Usᴇʀʙᴏᴛ Tᴇʟᴇɢʀᴀᴍ**\n\n **Mᴀsᴛᴇʀ** {ALIVE_NAME}\n\n** Bʀᴀɴᴄʜ :** Galaxy-Userbot\n** Vᴇʀsɪ :** `v{BOT_VER}`\n** Pʟᴜɢɪɴs :** `{len(plugins)}`\n")
                 await event.edit(
                     text,
-                    file=flickslogo,
+                    file=ALIVE_LOGO,
                     link_preview=True,
                     buttons=main_help_button)
 
@@ -435,10 +435,10 @@ with bot:
             if event.query.user_id == uid:  # @Flicasyncks_Userbot
                 # https://t.me/TelethonChat/115200
                 text = (
-                    f"\n**Usᴇʀʙᴏᴛ Tᴇʟᴇɢʀᴀᴍ**\n\n **Mᴀsᴛᴇʀ** {ALIVE_NAME}\n\n** Bʀᴀɴᴄʜ :** Flicks-Userbot\n** Vᴇʀsɪ :** `v{BOT_VER}`\n** Pʟᴜɢɪɴs :** `{len(plugins)}`\n")
+                    f"\n**Usᴇʀʙᴏᴛ Tᴇʟᴇɢʀᴀᴍ**\n\n **Mᴀsᴛᴇʀ** {ALIVE_NAME}\n\n** Bʀᴀɴᴄʜ :** Galaxy-Userbot\n** Vᴇʀsɪ :** `v{BOT_VER}`\n** Pʟᴜɢɪɴs :** `{len(plugins)}`\n")
                 await event.edit(
                     text,
-                    file=flickslogo,
+                    file=ALIVE_LOGO,
                     link_preview=True,
                     buttons=main_help_button)
 
@@ -450,7 +450,7 @@ with bot:
         async def on_plug_in_callback_query_handler(event):
             if event.query.user_id == uid:
                 text = (
-                    f"Owner menu untuk {ALIVE_NAME} \n"
+                    f"Owner menu for {ALIVE_NAME} \n"
                     f"`Branch    :` {UPSTREAM_REPO_BRANCH} \n"
                     f"`Versi Bot :` {BOT_VER} \n"
                     f"`Plugins   :` {len(plugins)} \n"
@@ -458,20 +458,20 @@ with bot:
                     f"`Database  :` SQL \n")
                 await event.edit(
                     text,
-                    file=flickslogo,
+                    file=ALIVE_LOGO,
                     link_preview=True,
                     buttons=[
                         [
                             Button.inline("Ping ⚡",
                                           data="pingbot"),
-                            Button.inline("Info ?",
+                            Button.inline("About ?",
                                           data="about")],
                         [custom.Button.inline(
                             "Back", data="gcback")],
                     ]
                 )
             else:
-                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nYou have no right to press these buttons"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(
@@ -487,7 +487,7 @@ with bot:
                 await event.answer(
                     f"PONG 🏓\n {ms}ms", cache_time=0, alert=True)
             else:
-                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nYou have no right to press these buttons"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(events.CallbackQuery(data=b"about"))
@@ -499,21 +499,21 @@ OwnerID - {uid}
 [Link To Profile 👤](tg://user?id={uid})
 Owner repo - [Fariz](tg://openmessage?user_id=1514078508)
 Support - @FlicksSupport
-Flicks-Userbot [v{BOT_VER}](https://github.com/farizjs/Flicks-Userbot)
+Galaxy-Userbot [v{BOT_VER}](https://github.com/farizjs/Galaxy-Userbot)
 """,
                                  buttons=[
                                      [
                                          Button.url("Repo",
-                                                    "https://github.com/farizjs/Flicks-Userbot"),
+                                                    "https://github.com/farizjs/Galaxy-Userbot"),
                                          custom.Button.inline("ʙᴀᴄᴋ​",
                                                               data="ownrmn")],
                                  ]
                                  )
             else:
-                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nYou have no right to press these buttons"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-        @tgbot.on(events.CallbackQuery(data=b"flicks_inline"))
+        @tgbot.on(events.CallbackQuery(data=b"galaxy_inline"))
         async def about(event):
             if event.query.user_id == uid:
                 await event.edit(f"""
@@ -530,7 +530,7 @@ Voice chat group menu untuk {ALIVE_NAME}
                                  ]
                                  )
             else:
-                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nYou have no right to press these buttons"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(
@@ -561,11 +561,11 @@ Voice chat group menu untuk {ALIVE_NAME}
 """)
                 await event.edit(
                     text,
-                    file=flickslogo,
+                    file=ALIVE_LOGO,
                     link_preview=True,
-                    buttons=[Button.inline("Back", data="flicks_inline")])
+                    buttons=[Button.inline("Back", data="galaxy_inline")])
             else:
-                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nYou have no right to press these buttons"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(
@@ -599,7 +599,7 @@ Usage: To get off VC Group
 """)
                 await event.edit(
                     text,
-                    file=flickslogo,
+                    file=ALIVE_LOGO,
                     link_preview=True,
                     buttons=[Button.inline("Back", data="galaxy_inline")])
             else:
