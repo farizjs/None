@@ -412,6 +412,206 @@ with bot:
 
         @tgbot.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"helpme_close\((.+?)\)")
+            )
+        )
+        async def on_plug_in_callback_query_handler(event):
+            if event.query.user_id == uid:  # @Flicasyncks_Userbot
+                # https://t.me/TelethonChat/115200
+                text = (
+                    f"\n**Usᴇʀʙᴏᴛ Tᴇʟᴇɢʀᴀᴍ**\n\n **Mᴀsᴛᴇʀ** {ALIVE_NAME}\n\n** Bʀᴀɴᴄʜ :** Flicks-Userbot\n** Vᴇʀsɪ :** `v{BOT_VER}`\n** Pʟᴜɢɪɴs :** `{len(plugins)}`\n")
+                await event.edit(
+                    text,
+                    file=flickslogo,
+                    link_preview=True,
+                    buttons=main_help_button)
+
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"gcback")
+            )
+        )
+        async def gback_handler(event):
+            if event.query.user_id == uid:  # @Flicasyncks_Userbot
+                # https://t.me/TelethonChat/115200
+                text = (
+                    f"\n**Usᴇʀʙᴏᴛ Tᴇʟᴇɢʀᴀᴍ**\n\n **Mᴀsᴛᴇʀ** {ALIVE_NAME}\n\n** Bʀᴀɴᴄʜ :** Flicks-Userbot\n** Vᴇʀsɪ :** `v{BOT_VER}`\n** Pʟᴜɢɪɴs :** `{len(plugins)}`\n")
+                await event.edit(
+                    text,
+                    file=flickslogo,
+                    link_preview=True,
+                    buttons=main_help_button)
+
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"ownrmn")
+            )
+        )
+        async def on_plug_in_callback_query_handler(event):
+            if event.query.user_id == uid:
+                text = (
+                    f"Owner menu untuk {ALIVE_NAME} \n"
+                    f"`Branch    :` {UPSTREAM_REPO_BRANCH} \n"
+                    f"`Versi Bot :` {BOT_VER} \n"
+                    f"`Plugins   :` {len(plugins)} \n"
+                    f"`Bahasa    :` Python \n"
+                    f"`Database  :` SQL \n")
+                await event.edit(
+                    text,
+                    file=flickslogo,
+                    link_preview=True,
+                    buttons=[
+                        [
+                            Button.inline("Ping ⚡",
+                                          data="pingbot"),
+                            Button.inline("Info ?",
+                                          data="about")],
+                        [custom.Button.inline(
+                            "Back", data="gcback")],
+                    ]
+                )
+            else:
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"pingbot")
+            )
+        )
+        async def on_plug_in_callback_query_handler(event):
+            if event.query.user_id == uid:
+                start = datetime.now()
+                end = datetime.now()
+                ms = (end - start).microseconds / 1000
+                await event.answer(
+                    f"PONG 🏓\n {ms}ms", cache_time=0, alert=True)
+            else:
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+        @tgbot.on(events.CallbackQuery(data=b"about"))
+        async def about(event):
+            if event.query.user_id == uid:
+                await event.edit(f"""
+Owner - {ALIVE_NAME}
+OwnerID - {uid}
+[Link To Profile 👤](tg://user?id={uid})
+Owner repo - [Fariz](tg://openmessage?user_id=1514078508)
+Support - @FlicksSupport
+Flicks-Userbot [v{BOT_VER}](https://github.com/farizjs/Flicks-Userbot)
+""",
+                                 buttons=[
+                                     [
+                                         Button.url("Repo",
+                                                    "https://github.com/farizjs/Flicks-Userbot"),
+                                         custom.Button.inline("ʙᴀᴄᴋ​",
+                                                              data="ownrmn")],
+                                 ]
+                                 )
+            else:
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+        @tgbot.on(events.CallbackQuery(data=b"flicks_inline"))
+        async def about(event):
+            if event.query.user_id == uid:
+                await event.edit(f"""
+Voice chat group menu untuk {ALIVE_NAME}
+""",
+                                 buttons=[
+                                     [
+                                         Button.inline("Vc Plugin ⚙️",
+                                                       data="vcplugin"),
+                                         Button.inline("Vc Tools ⚙️",
+                                                       data="vctools")],
+                                     [custom.Button.inline(
+                                         "Back", data="gcback")],
+                                 ]
+                                 )
+            else:
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"vcplugin")
+            )
+        )
+        async def on_plug_in_callback_query_handler(event):
+            if event.query.user_id == uid:
+                text = (
+                    """
+  •  Syntax : .play <Judul Lagu/Link YT>
+  •  Function : Untuk Memutar Lagu di voice chat group dengan akun kamu
+  •  Syntax : .vplay <Judul Video/Link YT>
+  •  Function : Untuk Memutar Video di voice chat group dengan akun kamu
+  •  Syntax : .end
+  •  Function : Untuk Memberhentikan video/lagu yang sedang putar di voice chat group
+  •  Syntax : .skip
+  •  Function : Untuk Melewati video/lagu yang sedang di putar
+  •  Syntax : .pause
+  •  Function : Untuk memberhentikan video/lagu yang sedang diputar
+  •  Syntax : .resume
+  •  Function : Untuk melanjutkan pemutaran video/lagu yang sedang diputar
+  •  Syntax : .volume 1-200
+  •  Function : Untuk mengubah volume (Membutuhkan Hak admin)
+  •  Syntax : .playlist
+  •  Function : Untuk menampilkan daftar putar Lagu/Video
+""")
+                await event.edit(
+                    text,
+                    file=flickslogo,
+                    link_preview=True,
+                    buttons=[Button.inline("Back", data="flicks_inline")])
+            else:
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"vctools")
+            )
+        )
+        async def on_plug_in_callback_query_handler(event):
+            if event.query.user_id == uid:
+                text = (
+                    """
+  Command : .startvc
+  • : Untuk Memulai voice chat group
+  Command : .stopvc
+  • : Untuk Memberhentikan voice chat group
+  Command : .vctitle <title vcg>
+  • : Untuk Mengubah title/judul voice chat group
+  Command : .vcinvite
+  • : Mengundang Member group ke voice chat group
+  Command : .joinvc
+  • : Untuk Join VC Group
+  Command : .leavevc
+  • : Untuk Turun Dari VC Group
+""")
+                await event.edit(
+                    text,
+                    file=flickslogo,
+                    link_preview=True,
+                    buttons=[Button.inline("Back", data="flicks_inline")])
+            else:
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+        @tgbot.on(events.CallbackQuery(data=b"close"))
+        async def close(event):
+            if event.query.user_id == uid:
+                buttons = [
+                    (custom.Button.inline("Bᴜᴋᴀ Mᴇɴᴜ", data="gcback"),),
+                ]
+                await event.edit("**Mᴇɴᴜ Dɪᴛᴜᴛᴜᴘ​!**", file=flickslogo, buttons=buttons)
+            else:
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(rb"helpme_next\((.+?)\)")
             )
         )
