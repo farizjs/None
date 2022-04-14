@@ -517,7 +517,7 @@ Galaxy-Userbot [v{BOT_VER}](https://github.com/farizjs/Galaxy-Userbot)
         async def about(event):
             if event.query.user_id == uid:
                 await event.edit(f"""
-Voice chat group menu untuk {ALIVE_NAME}
+Voice chat group menu for {ALIVE_NAME}
 """,
                                  buttons=[
                                      [
