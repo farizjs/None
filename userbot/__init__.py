@@ -227,6 +227,15 @@ else:
     bot = TelegramClient("userbot", API_KEY, API_HASH)
 
 
+if BOT_TOKEN is not None:
+    tgbot = TelegramClient(
+        "TG_BOT_TOKEN",
+        api_id=API_KEY,
+        api_hash=API_HASH).start(
+        bot_token=BOT_TOKEN)
+else:
+    tgbot = None
+
 
 # Global Variables
 CMD_LIST = {}
@@ -279,12 +288,6 @@ def paginate_help(page_number, loaded_modules, prefix):
 
 with bot:
     try:
-
-        tgbot = TelegramClient(
-            "TG_BOT_TOKEN",
-            api_id=API_KEY,
-            api_hash=API_HASH).start(
-            bot_token=BOT_TOKEN)
 
         dugmeler = CMD_HELP
         me = bot.get_me()
