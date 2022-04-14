@@ -4,7 +4,7 @@ FROM mrmiss/userbutt:latest
 #
 # Clone repo and prepare working directory
 #
-RUN git clone -b sql-extended https://github.com/farizjs/FlicksProject /root/userbot
+RUN git clone -b sql-extended https://github.com/farizjs/None /root/userbot
 RUN mkdir /root/userbot/bin/
 WORKDIR /root/userbot/
 
