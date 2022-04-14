@@ -7,9 +7,13 @@
 
 from importlib import import_module
 from sys import argv
+from platform import python_version
 
+from telethon.tl.functions.channels import InviteToChannelRequest, JoinChannelRequest
+from telethon import version
 from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
-from userbot import LOGS, bot, BOTLOG_CHATID, ALIVE_NAME
+from userbot import ALIVE_NAME, BOT_VER, LOGS, BOT_TOKEN, BOT_USERNAME, BOTLOG_CHATID, bot
+from userbot.utils import autobot, autopilot
 from userbot.modules import ALL_MODULES
 
 
@@ -26,26 +30,45 @@ except PhoneNumberInvalidError:
 for module_name in ALL_MODULES:
     imported_module = import_module("userbot.modules." + module_name)
 
-LOGS.info(
-    "Congratulations, your userbot is now running !!"
-    "\nTelethon: {version.__version__}"
-    "\nPython: {python_version()}")
 
 if not BOTLOG_CHATID:
-    LOGS.warning(
-        "Yout BOTLOG_CHATID isn't set yet."
-        "this variable is highly recomended to fill to make sure"
-        "all errors go to your log chat not current chat and considered as a spammer.")
+    LOGS.info(
+        "BOTLOG_CHATID Unallocated vars, Starting Automatic Grouping..."
+    )
+    bot.loop.run_until_complete(autopilot())
+
+if not BOT_TOKEN:
+    LOGS.info(
+        "BOT_TOKEN Vars not filled, Started Automating BOT in @Botfather..."
+    )
+    bot.loop.run_until_complete(autobot())
+
+
+LOGS.info(
+    "Congratulations, your userbot is now running !!"
+    f"\nTelethon: {version.__version__}"
+    f"\nPython: {python_version()}")
+
 
 async def send_alive_status():
-    if BOTLOG_CHATID:
-        message = (
-            "**Bot is up and running!**\n\n"
-            f"**Telethon:** {version.__version__}\n"
-            f"**Python:** {python_version()}\n"
-            f"**User:** {ALIVE_NAME} !!'")
-        await bot.send_message(BOTLOG_CHATID, message)
-        return True
+    try:
+        if BOTLOG_CHATID != 0:
+            message = (
+                "**Bot is up and running!**\n\n"
+                f"**Telethon:** {version.__version__}\n"
+                f"**Python:** {python_version()}\n"
+                f"**User:** {ALIVE_NAME} !!'")
+            await bot.send_message(BOTLOG_CHATID, message)
+    except Exception as e:
+        LOGS.info(str(e))
+    try:
+        await bot(JoinChannelRequest("@TheFlicksUserbot"))
+    except BaseException:
+        pass
+    try:
+        await bot(InviteToChannelRequest(int(BOTLOG_CHATID), [BOT_USERNAME]))
+    except BaseException:
+        pass
 
 
 if len(argv) not in (1, 3, 4):
