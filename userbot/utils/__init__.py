@@ -11,3 +11,4 @@ from .progress import *
 from .tools import *
 from .utils import *
 from .log import *
+from .decorator import *
