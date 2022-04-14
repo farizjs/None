@@ -577,37 +577,44 @@ Voice chat group menu untuk {ALIVE_NAME}
             if event.query.user_id == uid:
                 text = (
                     """
-  Command : .startvc
-  • : Untuk Memulai voice chat group
-  Command : .stopvc
-  • : Untuk Memberhentikan voice chat group
-  Command : .vctitle <title vcg>
-  • : Untuk Mengubah title/judul voice chat group
-  Command : .vcinvite
-  • : Mengundang Member group ke voice chat group
-  Command : .joinvc
-  • : Untuk Join VC Group
-  Command : .leavevc
-  • : Untuk Turun Dari VC Group
+Plugin: VcTools.
+
+Command: .startvc.
+Usage: to start voice chat group
+
+Command: .stopvc.
+Usage: To stop Voice Chat Group
+
+Command: .vctitle <title VCG>
+Usage: To change the title / title Voice Chat Group
+
+Command: .vcinvite.
+Usage: invite member group to Voice Chat Group
+
+Command: .joinvc.
+Usage: for JOIN VC Group
+
+Command: .leavevc.
+Usage: To get off VC Group
 """)
                 await event.edit(
                     text,
                     file=flickslogo,
                     link_preview=True,
-                    buttons=[Button.inline("Back", data="flicks_inline")])
+                    buttons=[Button.inline("Back", data="galaxy_inline")])
             else:
-                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nYou have no right to press these buttons"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(events.CallbackQuery(data=b"close"))
         async def close(event):
             if event.query.user_id == uid:
                 buttons = [
-                    (custom.Button.inline("Bᴜᴋᴀ Mᴇɴᴜ", data="gcback"),),
+                    (custom.Button.inline("Open Menu", data="gcback"),),
                 ]
-                await event.edit("**Mᴇɴᴜ Dɪᴛᴜᴛᴜᴘ​!**", file=flickslogo, buttons=buttons)
+                await event.edit("**Menu is closed​!**", file=ALIVE_LOGO, buttons=buttons)
             else:
-                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nYou have no right to press these buttons"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @tgbot.on(
