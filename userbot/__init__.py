@@ -227,13 +227,6 @@ else:
     bot = TelegramClient("userbot", API_KEY, API_HASH)
 
 
-    tgbot = TelegramClient(
-        "TG_BOT_TOKEN",
-        api_id=API_KEY,
-        api_hash=API_HASH).start(
-        bot_token=BOT_TOKEN)
-
-
 
 # Global Variables
 CMD_LIST = {}
@@ -286,6 +279,12 @@ def paginate_help(page_number, loaded_modules, prefix):
 
 with bot:
     try:
+
+        tgbot = TelegramClient(
+            "TG_BOT_TOKEN",
+            api_id=API_KEY,
+            api_hash=API_HASH).start(
+            bot_token=BOT_TOKEN)
 
         dugmeler = CMD_HELP
         me = bot.get_me()
@@ -647,15 +646,15 @@ Usage: To get off VC Group
                 modul_name = event.data_match.group(1).decode("UTF-8")
 
                 cmdhel = str(CMD_HELP[modul_name])
-                if len(cmdhel) > 150:
+                if len(cmdhel) > 999:
                     help_string = (
-                        str(CMD_HELP[modul_name]).replace('`', '')[:150] + "..."
+                        str(CMD_HELP[modul_name])[:999] + "..."
                         + "\n\nRead more .help "
                         + modul_name
                         + " "
                     )
                 else:
-                    help_string = str(CMD_HELP[modul_name]).replace('`', '')
+                    help_string = str(CMD_HELP[modul_name])
 
                 reply_pop_up_alert = (
                     help_string
@@ -664,10 +663,14 @@ Usage: To get off VC Group
                         modul_name
                     )
                 )
+                await event.edit(
+                    reply_pop_up_alert, buttons=[
+                        Button.inline("Back", data="get_back")]
+                )
+
             else:
                 reply_pop_up_alert = "Please make for yourself, don't use my bot!"
-
-            await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
     except BaseException:
         LOGS.info(
