@@ -315,7 +315,7 @@ with bot:
         main_help_button = [
             [
                 Button.url("Settings ⚙️", f"t.me/{BOT_USERNAME}?start=set"),
-                Button.inline("Vc Menu ⚙️", data="flicks_inline"),
+                Button.inline("Vc Menu ⚙️", data="galaxy_inline"),
             ],
             [
                 Button.inline("Help Menu", data="open"),
@@ -328,7 +328,7 @@ with bot:
         @tgbot.on(events.NewMessage(pattern="/start"))
         async def handler(event):
             if event.message.from_id != uid:
-                await event.reply("Hey there!, this is Flicks Assistant of {ALIVE_NAME}!\n\n you can chat {ALIVE_NAME} with me!")
+                await event.reply("Hey there!, this is Galaxy Assistant of {ALIVE_NAME}!\n\n you can chat {ALIVE_NAME} with me!")
             else:
                 await event.reply(f"Hey there {ALIVE_NAME}\n\nI work for you :)")
 
@@ -341,7 +341,7 @@ with bot:
             if event.query.user_id == uid:
                 current_page_number = int(lockpage)
                 buttons = paginate_help(current_page_number, plugins, "helpme")
-                text = f"\n📚 **Inline Help Menu!**\n\n **Master​** {ALIVE_NAME}\n\n** Branch :** Flicks-Userbot\n** ᴠᴇʀsɪᴏɴ :** `v{BOT_VER}`\n** Plugins :** `{len(plugins)}`\n"
+                text = f"\n📚 **Inline Help Menu!**\n\n **Master​** {ALIVE_NAME}\n\n** Branch :** Galaxy-Userbot\n** ᴠᴇʀsɪᴏɴ :** `v{BOT_VER}`\n** Plugins :** `{len(plugins)}`\n"
                 await event.edit(
                     text,
                     file=ALIVE_LOGO,
@@ -360,7 +360,7 @@ with bot:
         async def on_plug_in_callback_query_handler(event):
             if event.query.user_id == uid:
                 buttons = paginate_help(0, plugins, "helpme")
-                text = f"\n📚 **Inline Help Menu!**\n\n **Master​** {ALIVE_NAME}\n\n** Branch :** Flicks-Userbot\n** ᴠᴇʀsɪᴏɴ :** `v{BOT_VER}`\n** Plugins :** `{len(plugins)}`\n"
+                text = f"\n📚 **Inline Help Menu!**\n\n **Master​** {ALIVE_NAME}\n\n** Branch :** Galaxy-Userbot\n** ᴠᴇʀsɪᴏɴ :** `v{BOT_VER}`\n** Plugins :** `{len(plugins)}`\n"
                 await event.edit(
                     text,
                     file=ALIVE_LOGO,
@@ -377,12 +377,12 @@ with bot:
             builder = event.builder
             result = None
             query = event.text
-            if event.query.user_id == uid and query.startswith("xflicks"):
+            if event.query.user_id == uid and query.startswith("galaxyo"):
                 buttons = paginate_help(0, dugmeler, "helpme")
                 result = builder.photo(
                     file=ALIVE_LOGO,
                     link_preview=False,
-                    text=f"\n**Flicks-Userbot**\n\n✥**Mᴀsᴛᴇʀ​** {ALIVE_NAME}\n\n✥**ʙʀᴀɴᴄʜ :** Flicks-Userbot\n✥**ᴠᴇʀsɪᴏɴ :** {BOT_VER}\n✥**Plugins** : {len(plugins)}".format(
+                    text=f"\n**Galazy-Userbot**\n\n✥**Mᴀsᴛᴇʀ​** {ALIVE_NAME}\n\n✥**ʙʀᴀɴᴄʜ :** Galaxy-Userbot\n✥**ᴠᴇʀsɪᴏɴ :** {BOT_VER}\n✥**Plugins** : {len(plugins)}".format(
                         len(dugmeler),
                     ),
                     buttons=main_help_button,
@@ -395,13 +395,13 @@ with bot:
                     link_preview=True)
             else:
                 result = builder.article(
-                    "Flicks Project",
+                    "Galaxy Userbot",
                     text="""You can convert your account to bot and use them. Remember, you can't manage someone else's bot! All installation details are explained from GitHub address below.""",
                     buttons=[
                         [
                             custom.Button.url(
                                 "GitHub Repo",
-                                "https://github.com/farizjs/FlicksProject"),
+                                "https://github.com/farizjs/Galaxy-Userbot"),
                             custom.Button.url(
                                 "Support",
                                 "https://t.me/FlicksSupport")],
