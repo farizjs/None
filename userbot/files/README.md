@@ -1,0 +1,3 @@
+```.py
+From . import *
+```
