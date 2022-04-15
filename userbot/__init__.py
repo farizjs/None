@@ -79,27 +79,15 @@ if CONFIG_CHECK:
     quit(1)
 
 # Telegram App KEY and HASH
-API_KEY = os.environ.get("API_ID")
+API_KEY = os.environ.get("API_KEY")
 API_HASH = os.environ.get("API_HASH")
 
-# =====================================================================
-SUDO_USERS = {
-    int(x) for x in os.environ.get(
-        "SUDO_USERS",
-        "").split()}
-BL_CHAT = {int(x) for x in os.environ.get("BL_CHAT", "").split()}
-# =====================================================================
 
 # Userbot Session String
 STRING_SESSION = os.environ.get("STRING_SESSION", None)
 
 # Logging channel/group ID configuration.
 BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID", 0))
-
-BOT_VER = "0.1.0"
-
-HANDLER = os.environ.get("HANDLER") or "."
-SUDO_HANDLER = os.environ.get("SUDO_HANDLER") or "$"
 
 # Userbot logging feature switch.
 LOGSPAMMER = sb(
@@ -123,7 +111,7 @@ GENIUS = os.environ.get("GENIUS_API_TOKEN", None)
 
 # Custom (forked) repo URL for updater.
 UPSTREAM_REPO_URL = os.environ.get(
-    "UPSTREAM_REPO_URL", "https://github.com/farizjs/FlicksProject")
+    "UPSTREAM_REPO_URL", "https://github.com/mrmissx/UserButt.git")
 UPSTREAM_REPO_BRANCH = os.environ.get("UPSTREAM_REPO_BRANCH", "sql-extended")
 
 # Console verbose logging
@@ -153,13 +141,13 @@ ANTI_SPAMBOT = sb(os.environ.get("ANTI_SPAMBOT", "False"))
 ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT", "False"))
 
 # Default .alive name
-ALIVE_NAME = os.environ.get("ALIVE_NAME", "glx")
+ALIVE_NAME = os.environ.get("ALIVE_NAME", None)
 
 # Default .alive logo
-ALIVE_LOGO = os.environ.get("ALIVE_LOGO", "https://telegra.ph/file/a61b3065d139ef6d620f1.jpg")
+ALIVE_LOGO = os.environ.get("ALIVE_LOGO", None)
 
 # Time & Date - Country and Time Zone
-COUNTRY = str(os.environ.get("COUNTRY", "id"))
+COUNTRY = str(os.environ.get("COUNTRY", ""))
 TZ_NUMBER = int(os.environ.get("TZ_NUMBER", 1))
 
 # Clean Welcome
@@ -167,7 +155,7 @@ CLEAN_WELCOME = sb(os.environ.get("CLEAN_WELCOME", "True"))
 
 # Last.fm Module
 BIO_PREFIX = os.environ.get("BIO_PREFIX", None)
-DEFAULT_BIO = os.environ.get("DEFAULT_BIO", "404 Not Found")
+DEFAULT_BIO = os.environ.get("DEFAULT_BIO", None)
 LASTFM_API = os.environ.get("LASTFM_API", None)
 LASTFM_SECRET = os.environ.get("LASTFM_SECRET", None)
 LASTFM_USERNAME = os.environ.get("LASTFM_USERNAME", None)
@@ -190,7 +178,7 @@ TEMP_DOWNLOAD_DIRECTORY = os.environ.get(
     "TMP_DOWNLOAD_DIRECTORY", "./downloads/")
 
 # Terminal alias
-TERM_ALIAS = os.environ.get("TERM_ALIAS", "Galaxy")
+TERM_ALIAS = os.environ.get("TERM_ALIAS", "UserButt")
 
 # Zipfile module
 ZIP_DOWNLOAD_DIRECTORY = os.environ.get("ZIP_DOWNLOAD_DIRECTORY", "./zips")
@@ -227,14 +215,35 @@ else:
     bot = TelegramClient("userbot", API_KEY, API_HASH)
 
 
+async def check_botlog_chatid():
+    if not BOTLOG_CHATID:
+        return
+
+    entity = await bot.get_entity(BOTLOG_CHATID)
+    if entity.default_banned_rights.send_messages:
+        LOGS.info(
+            "Your account doesn't have rights to send messages to BOTLOG_CHATID "
+            "group. Check if you typed the Chat ID correctly.")
+        quit(1)
+
+
+async def send_alive_status():
+    if BOTLOG_CHATID:
+        message = (
+            "**Bot is up and running!**\n\n"
+            f"**Telethon:** {version.__version__}\n"
+            f"**Python:** {python_version()}\n"
+            f"**User:** {ALIVE_NAME or 'Set `ALIVE_NAME` ConfigVar!'}"
+        )
+        await bot.send_message(BOTLOG_CHATID, message)
+        return True
+
 
 # Global Variables
-CMD_LIST = {}
 COUNT_MSG = 0
 USERS = {}
 COUNT_PM = {}
 LASTMSG = {}
-LOAD_PLUG = {}
 CMD_HELP = {}
 ISAFK = False
 AFKREASON = None
@@ -260,18 +269,19 @@ def paginate_help(page_number, loaded_modules, prefix):
         ] + [
             (
                 custom.Button.inline(
-                    "<--", data="{}_prev({})".format(prefix, modulo_page)
+                    "⬅️", data="{}_prev({})".format(prefix, modulo_page)
                 ),
                 custom.Button.inline(
-                    "-->", data="{}_next({})".format(prefix, modulo_page)
+                    "➡️", data="{}_next({})".format(prefix, modulo_page)
                 ),
             )
         ]
     return pairs
 
+
 with bot:
     try:
-        asst = TelegramClient(
+        tgbot = TelegramClient(
             "TG_BOT_TOKEN",
             api_id=API_KEY,
             api_hash=API_HASH).start(
@@ -280,106 +290,54 @@ with bot:
         dugmeler = CMD_HELP
         me = bot.get_me()
         uid = me.id
-        main_help_button = [
-            [
-                Button.url("Settings ⚙️", f"t.me/{BOT_USERNAME}?start=set"),
-                Button.inline("Vc Menu ⚙️", data="galaxy_inline"),
-            ],
-            [
-                Button.inline("Help Menu", data="open"),
-                Button.inline("Owner Menu", data="ownrmn"),
-            ],
-            [Button.inline("Close", data="close")],
-        ]
 
-
-        @asst.on(events.NewMessage(pattern="/start"))
+        @tgbot.on(events.NewMessage(pattern="/start"))
         async def handler(event):
             if event.message.from_id != uid:
-                await event.reply(f"Hey there!, this is Galaxy Assistant of {ALIVE_NAME}!\n\n you can chat {ALIVE_NAME} with me!")
+                await event.reply("I'm [UserButt](https://github.com/mrmissx/userbutt) modules helper...\nplease make your own bot, don't use mine 😋")
             else:
-                await event.reply(f"Hey there {ALIVE_NAME}\n\nI work for you :)")
+                await event.reply(f"`Hey there {ALIVE_NAME}\n\nI work for you :)`")
 
-        @asst.on(
-            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
-                data=re.compile(rb"get_back")
-            )
-        )
-        async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid:
-                current_page_number = int(lockpage)
-                buttons = paginate_help(current_page_number, plugins, "helpme")
-                text = f"\n📚 **Inline Help Menu!**\n\n **Master​** {ALIVE_NAME}\n\n** Branch :** Galaxy-Userbot\n** ᴠᴇʀsɪᴏɴ :** `v{BOT_VER}`\n** Plugins :** `{len(plugins)}`\n"
-                await event.edit(
-                    text,
-                    file=ALIVE_LOGO,
-                    buttons=buttons,
-                    link_preview=False,
-                )
-            else:
-                reply_pop_up_alert = f"You are Not allowed, this Userbot Belongs {ALIVE_NAME}"
-                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
-
-        @asst.on(
-            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
-                data=re.compile(rb"open")
-            )
-        )
-        async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid:
-                buttons = paginate_help(0, plugins, "helpme")
-                text = f"\n📚 **Inline Help Menu!**\n\n **Master​** {ALIVE_NAME}\n\n** Branch :** Galaxy-Userbot\n** ᴠᴇʀsɪᴏɴ :** `v{BOT_VER}`\n** Plugins :** `{len(plugins)}`\n"
-                await event.edit(
-                    text,
-                    file=ALIVE_LOGO,
-                    buttons=buttons,
-                    link_preview=False,
-                )
-            else:
-                reply_pop_up_alert = f"You are Not allowed, this Userbot Belongs {ALIVE_NAME}"
-                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
-
-
-        @asst.on(events.InlineQuery)  # pylint:disable=E0602
+        @tgbot.on(events.InlineQuery)  # pylint:disable=E0602
         async def inline_handler(event):
             builder = event.builder
             result = None
             query = event.text
-            if event.query.user_id == uid and query.startswith(
-                    "galaxyo"):
+            if event.query.user_id == uid and query.startswith("@UserButt"):
                 buttons = paginate_help(0, dugmeler, "helpme")
-                result = builder.photo(
-                    file=ALIVE_LOGO,
-                    link_preview=False,
-                    text=f"\n**Inline Helper Bot**\n\n**User** {DEFAULTUSER}\n**Version Userbot :** `v{BOT_VER}`\n**Modules :** `{len(modules)}`\n\n**Thanks Your Deploy WeebProject-Apis!**".format(
+                result = builder.article(
+                    "Please Use Only With .help Command",
+                    text="{}\nTotal loaded modules: {}".format(
+                        "UserButt modules helper.\n",
                         len(dugmeler),
                     ),
                     buttons=buttons,
+                    link_preview=False,
                 )
             elif query.startswith("tb_btn"):
                 result = builder.article(
-                    "Helper WeebProject-Apis ",
-                    text="List Modules",
+                    "UserButt Helper",
+                    text="List of Modules",
                     buttons=[],
                     link_preview=True)
             else:
                 result = builder.article(
-                    "Userbot",
-                    text="""**You Can Make WeebProject-Apis Your Own Way :** [Click Here](t.me/KingUserbotSupport)""",
+                    "UserButt",
+                    text="""You can convert your account to bot and use them. Remember, you can't manage someone else's bot! All installation details are explained from GitHub address below.""",
                     buttons=[
                         [
                             custom.Button.url(
-                                "Repository",
-                                "https://github.com/apisuserbot/WeebProject-Apis"),
+                                "GitHub Repo",
+                                "https://github.com/mrmissx/userbutt"),
                             custom.Button.url(
-                                "Developer",
-                                "t.me/PacarFerdilla")],
+                                "Support",
+                                "https://t.me/UserBotIndo")],
                     ],
                     link_preview=False,
                 )
             await event.answer([result] if result else None)
 
-        @asst.on(
+        @tgbot.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(rb"helpme_next\((.+?)\)")
             )
@@ -393,10 +351,10 @@ with bot:
                 # https://t.me/TelethonChat/115200
                 await event.edit(buttons=buttons)
             else:
-                reply_pop_up_alert = f"You Not Own Userbot"
+                reply_pop_up_alert = "Please make for yourself, don't use my bot!"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-        @asst.on(
+        @tgbot.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(rb"helpme_prev\((.+?)\)")
             )
@@ -411,10 +369,10 @@ with bot:
                 # https://t.me/TelethonChat/115200
                 await event.edit(buttons=buttons)
             else:
-                reply_pop_up_alert = f"You Not Own Userbot"
+                reply_pop_up_alert = "Please make for yourself, don't use my bot!"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-        @asst.on(
+        @tgbot.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(b"ub_modul_(.*)")
             )
@@ -424,15 +382,15 @@ with bot:
                 modul_name = event.data_match.group(1).decode("UTF-8")
 
                 cmdhel = str(CMD_HELP[modul_name])
-                if len(cmdhel) > 999:
+                if len(cmdhel) > 150:
                     help_string = (
-                        str(CMD_HELP[modul_name])[:999] + "..."
+                        str(CMD_HELP[modul_name]).replace('`', '')[:150] + "..."
                         + "\n\nRead more .help "
                         + modul_name
                         + " "
                     )
                 else:
-                    help_string = str(CMD_HELP[modul_name])
+                    help_string = str(CMD_HELP[modul_name]).replace('`', '')
 
                 reply_pop_up_alert = (
                     help_string
@@ -441,17 +399,26 @@ with bot:
                         modul_name
                     )
                 )
-                await event.edit(
-                    reply_pop_up_alert, buttons=[
-                        Button.inline("Back", data="get_back")]
-                )
-
             else:
                 reply_pop_up_alert = "Please make for yourself, don't use my bot!"
-                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+            await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
     except BaseException:
         LOGS.info(
             "Support for inline is disabled on your bot. "
             "To enable it, define a bot token and enable inline mode on your bot. "
             "If you think there is a problem other than this, contact us.")
+    try:
+        bot.loop.run_until_complete(check_botlog_chatid())
+    except BaseException:
+        LOGS.info(
+            "BOTLOG_CHATID environment variable isn't a "
+            "valid entity. Check your environment variables/config.env file."
+        )
+        quit(1)
+
+    try:
+        bot.loop.run_until_complete(send_alive_status())
+    except BaseException:
+        pass
