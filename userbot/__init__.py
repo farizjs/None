@@ -280,7 +280,7 @@ def paginate_help(page_number, loaded_modules, prefix):
 with bot:
     try:
 
-        tgbot = TelegramClient(
+        asst = TelegramClient(
             "BOT_TOKEN", api_id=API_KEY, api_hash=API_HASH
         ).start(bot_token=BOT_TOKEN)
 
@@ -300,14 +300,14 @@ with bot:
         ]
 
 
-        @tgbot.on(events.NewMessage(pattern="/start"))
+        @asst.on(events.NewMessage(pattern="/start"))
         async def handler(event):
             if event.message.from_id != uid:
                 await event.reply(f"Hey there!, this is Galaxy Assistant of {ALIVE_NAME}!\n\n you can chat {ALIVE_NAME} with me!")
             else:
                 await event.reply(f"Hey there {ALIVE_NAME}\n\nI work for you :)")
 
-        @tgbot.on(
+        @asst.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(rb"get_back")
             )
@@ -327,7 +327,7 @@ with bot:
                 reply_pop_up_alert = f"You are Not allowed, this Userbot Belongs {ALIVE_NAME}"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-        @tgbot.on(
+        @asst.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(rb"open")
             )
@@ -347,7 +347,7 @@ with bot:
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
 
-        @tgbot.on(events.InlineQuery)  # pylint:disable=E0602
+        @asst.on(events.InlineQuery)  # pylint:disable=E0602
         async def inline_handler(event):
             builder = event.builder
             result = None
@@ -357,7 +357,7 @@ with bot:
                 result = builder.photo(
                     file=ALIVE_LOGO,
                     link_preview=False,
-                    text=f"\n**Galazy-Userbot**\n\n✥**Mᴀsᴛᴇʀ​** {ALIVE_NAME}\n\n✥**ʙʀᴀɴᴄʜ :** Galaxy-Userbot\n✥**ᴠᴇʀsɪᴏɴ :** {BOT_VER}\n✥**Plugins** : {len(plugins)}".format(
+                    text=f"\n**Galaxy-Userbot**\n\n✥**Mᴀsᴛᴇʀ​** {ALIVE_NAME}\n\n✥**ʙʀᴀɴᴄʜ :** Galaxy-Userbot\n✥**ᴠᴇʀsɪᴏɴ :** {BOT_VER}\n✥**Plugins** : {len(plugins)}".format(
                         len(dugmeler),
                     ),
                     buttons=main_help_button,
@@ -385,7 +385,7 @@ with bot:
                 )
             await event.answer([result] if result else None)
 
-        @tgbot.on(
+        @asst.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(rb"helpme_close\((.+?)\)")
             )
@@ -401,7 +401,7 @@ with bot:
                     link_preview=True,
                     buttons=main_help_button)
 
-        @tgbot.on(
+        @asst.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(rb"gcback")
             )
@@ -417,7 +417,7 @@ with bot:
                     link_preview=True,
                     buttons=main_help_button)
 
-        @tgbot.on(
+        @asst.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(rb"ownrmn")
             )
@@ -449,7 +449,7 @@ with bot:
                 reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nYou have no right to press these buttons"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-        @tgbot.on(
+        @asst.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(rb"pingbot")
             )
@@ -465,7 +465,7 @@ with bot:
                 reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nYou have no right to press these buttons"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-        @tgbot.on(events.CallbackQuery(data=b"about"))
+        @asst.on(events.CallbackQuery(data=b"about"))
         async def about(event):
             if event.query.user_id == uid:
                 await event.edit(f"""
@@ -488,7 +488,7 @@ Galaxy-Userbot [v{BOT_VER}](https://github.com/farizjs/Galaxy-Userbot)
                 reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nYou have no right to press these buttons"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-        @tgbot.on(events.CallbackQuery(data=b"galaxy_inline"))
+        @asst.on(events.CallbackQuery(data=b"galaxy_inline"))
         async def about(event):
             if event.query.user_id == uid:
                 await event.edit(f"""
@@ -508,7 +508,7 @@ Voice chat group menu for {ALIVE_NAME}
                 reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nYou have no right to press these buttons"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-        @tgbot.on(
+        @asst.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(rb"vcplugin")
             )
@@ -550,7 +550,7 @@ Usage: To display playlists of songs / videos
                 reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nYou have no right to press these buttons"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-        @tgbot.on(
+        @asst.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(rb"vctools")
             )
@@ -588,7 +588,7 @@ Usage: To get off VC Group
                 reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nYou have no right to press these buttons"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-        @tgbot.on(events.CallbackQuery(data=b"close"))
+        @asst.on(events.CallbackQuery(data=b"close"))
         async def close(event):
             if event.query.user_id == uid:
                 buttons = [
@@ -599,7 +599,7 @@ Usage: To get off VC Group
                 reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nYou have no right to press these buttons"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-        @tgbot.on(
+        @asst.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(rb"helpme_next\((.+?)\)")
             )
@@ -616,7 +616,7 @@ Usage: To get off VC Group
                 reply_pop_up_alert = "Please make for yourself, don't use my bot!"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-        @tgbot.on(
+        @asst.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(rb"helpme_prev\((.+?)\)")
             )
@@ -634,7 +634,7 @@ Usage: To get off VC Group
                 reply_pop_up_alert = "Please make for yourself, don't use my bot!"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-        @tgbot.on(
+        @asst.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
                 data=re.compile(b"ub_modul_(.*)")
             )
