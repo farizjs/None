@@ -12,8 +12,8 @@ from platform import python_version
 from telethon.tl.functions.channels import InviteToChannelRequest, JoinChannelRequest
 from telethon import version
 from telethon.errors.rpcerrorlist import PhoneNumberInvalidError
-from userbot import ALIVE_NAME, BOT_VER, LOGS, BOT_TOKEN, BOT_USERNAME, BOTLOG_CHATID, bot
-from userbot.utils import autobot, autopilot
+from userbot import ALIVE_NAME, LOGS, BOTLOG_CHATID, bot
+# from userbot.utils import autobot, autopilot
 from userbot.modules import ALL_MODULES
 
 
@@ -31,17 +31,17 @@ for module_name in ALL_MODULES:
     imported_module = import_module("userbot.modules." + module_name)
 
 
-if not BOTLOG_CHATID:
-    LOGS.info(
-        "BOTLOG_CHATID Unallocated vars, Starting Automatic Grouping..."
-    )
-    bot.loop.run_until_complete(autopilot())
+# if not BOTLOG_CHATID:
+#    LOGS.info(
+#        "BOTLOG_CHATID Unallocated vars, Starting Automatic Grouping..."
+#    )
+#    bot.loop.run_until_complete(autopilot())
 
-if not BOT_TOKEN:
-    LOGS.info(
-        "BOT_TOKEN Vars not filled, Started Automating BOT in @Botfather..."
-    )
-    bot.loop.run_until_complete(autobot())
+# if not BOT_TOKEN:
+#    LOGS.info(
+#        "BOT_TOKEN Vars not filled, Started Automating BOT in @Botfather..."
+#    )
+#    bot.loop.run_until_complete(autobot())
 
 
 LOGS.info(
