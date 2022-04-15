@@ -345,55 +345,39 @@ with bot:
             builder = event.builder
             result = None
             query = event.text
-            if event.query.user_id == uid and query.startswith("galaxyo"):
+            if event.query.user_id == uid and query.startswith(
+                    "galaxyo"):
                 buttons = paginate_help(0, dugmeler, "helpme")
-                result = builder.article(
-                    "Please Use Only With .help Command",
-                    text="{}\nTotal loaded modules: {}".format(
-                        "Galaxy modules helper.\n",
+                result = builder.photo(
+                    file=ALIVE_LOGO,
+                    link_preview=False,
+                    text=f"\n**Inline Helper Bot**\n\n**User** {DEFAULTUSER}\n**Version Userbot :** `v{BOT_VER}`\n**Modules :** `{len(modules)}`\n\n**Thanks Your Deploy WeebProject-Apis!**".format(
                         len(dugmeler),
                     ),
                     buttons=buttons,
-                    link_preview=False,
                 )
             elif query.startswith("tb_btn"):
                 result = builder.article(
-                    "UserButt Helper",
-                    text="List of Modules",
+                    "Helper WeebProject-Apis ",
+                    text="List Modules",
                     buttons=[],
                     link_preview=True)
             else:
                 result = builder.article(
-                    "Galaxy Userbot",
-                    text="""You can convert your account to bot and use them. Remember, you can't manage someone else's bot! All installation details are explained from GitHub address below.""",
+                    "Userbot",
+                    text="""**You Can Make WeebProject-Apis Your Own Way :** [Click Here](t.me/KingUserbotSupport)""",
                     buttons=[
                         [
                             custom.Button.url(
-                                "GitHub Repo",
-                                "https://github.com/farizjs/Galaxy-Userbot"),
+                                "Repository",
+                                "https://github.com/apisuserbot/WeebProject-Apis"),
                             custom.Button.url(
-                                "Support",
-                                "https://t.me/FlicksSupport")],
+                                "Developer",
+                                "t.me/PacarFerdilla")],
                     ],
                     link_preview=False,
                 )
             await event.answer([result] if result else None)
-
-        @asst.on(
-            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
-                data=re.compile(rb"helpme_close\((.+?)\)")
-            )
-        )
-        async def close(event):
-            if event.query.user_id == uid:
-                buttons = [
-                    (custom.Button.inline("Open Menu", data="gcback"),),
-                ]
-                await event.edit("**Menu is closed​!**", file=ALIVE_LOGO, buttons=buttons)
-            else:
-                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nYou have no right to press these buttons"
-                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
-
 
         @asst.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
@@ -409,7 +393,7 @@ with bot:
                 # https://t.me/TelethonChat/115200
                 await event.edit(buttons=buttons)
             else:
-                reply_pop_up_alert = "Please make for yourself, don't use my bot!"
+                reply_pop_up_alert = f"You Not Own Userbot"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @asst.on(
@@ -427,7 +411,7 @@ with bot:
                 # https://t.me/TelethonChat/115200
                 await event.edit(buttons=buttons)
             else:
-                reply_pop_up_alert = "Please make for yourself, don't use my bot!"
+                reply_pop_up_alert = f"You Not Own Userbot"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
         @asst.on(
