@@ -306,9 +306,9 @@ with bot:
             query = event.text
             if event.query.user_id == uid and query.startswith("@UserButt"):
                 buttons = paginate_help(0, dugmeler, "helpme")
-                result = builder.photo(
-                    file=INLINE_PIC,
-                    text = f"\n📚 **Inline Help Menu!**\n\n **Master​** {ALIVE_NAME}\n\n** Branch :** {UPSTREAM_REPO_BRANCH}\n** Version :** `v1.0.1`\n** Plugins :** `{len(dugmeler)}`\n",
+                result = builder.article(
+                    "Please Use Only With .help Command",
+                    text = f"\n📚 **Inline Help Menu!**\n\n **Master​** {ALIVE_NAME}\n** Plugins :** `{len(dugmeler)}`\n",
                     buttons=buttons,
                     link_preview=False,
                 )
