@@ -305,7 +305,7 @@ with bot:
                 buttons = paginate_help(0, dugmeler, "helpme")
                 result = builder.article(
                     "Please Use Only With .help Command",
-                    text = f"\n📚 **Inline Help Menu!**\n\n **Master​** {ALIVE_NAME}\n\n** Branch :** {UPSTREAM_REPO_BRANCH}\n** Version :** `v1.0.1`\n** Plugins :** `{len(dugmeler)}`\n"
+                    text = f"\n📚 **Inline Help Menu!**\n\n **Master​** {ALIVE_NAME}\n\n** Branch :** {UPSTREAM_REPO_BRANCH}\n** Version :** `v1.0.1`\n** Plugins :** `{len(dugmeler)}`\n",
                     buttons=buttons,
                     link_preview=False,
                 )
@@ -352,7 +352,7 @@ with bot:
         async def on_plug_in_callback_query_handler(event):
             if event.query.user_id == uid:
                 buttons = paginate_help(0, plugins, "helpme")
-                text = f"\n📚 **Inline Help Menu!**\n\n **Master​** {ALIVE_NAME}\n\n** Branch :** {UPSTREAM_REPO_BRANCH}\n** Version :** `v1.0.1`\n** Plugins :** `{len(dugmeler)}`\n"
+                text = f"\n📚 **Inline Help Menu!**\n\n **Master​** {ALIVE_NAME}\n\n** Branch :** {UPSTREAM_REPO_BRANCH}\n** Version :** `v1.0.1`\n** Plugins :** `{len(dugmeler)}`\n",
                 await event.edit(
                     text,
                     buttons=buttons,
