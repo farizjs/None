@@ -141,10 +141,13 @@ ANTI_SPAMBOT = sb(os.environ.get("ANTI_SPAMBOT", "False"))
 ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT", "False"))
 
 # Default .alive name
-ALIVE_NAME = os.environ.get("ALIVE_NAME", None)
+ALIVE_NAME = os.environ.get("ALIVE_NAME", "https://telegra.ph/file/a61b3065d139ef6d620f1.jpg")
 
 # Default .alive logo
-ALIVE_LOGO = os.environ.get("ALIVE_LOGO", None)
+ALIVE_LOGO = os.environ.get("ALIVE_LOGO", "https://telegra.ph/file/a61b3065d139ef6d620f1.jpg")
+
+# Default .help logo
+INLINE_PIC = os.environ.get("INLINE_PIC", None)
 
 # Time & Date - Country and Time Zone
 COUNTRY = str(os.environ.get("COUNTRY", ""))
@@ -303,8 +306,8 @@ with bot:
             query = event.text
             if event.query.user_id == uid and query.startswith("@UserButt"):
                 buttons = paginate_help(0, dugmeler, "helpme")
-                result = builder.article(
-                    "Please Use Only With .help Command",
+                result = builder.photo(
+                    file=INLINE_PIC,
                     text = f"\n📚 **Inline Help Menu!**\n\n **Master​** {ALIVE_NAME}\n\n** Branch :** {UPSTREAM_REPO_BRANCH}\n** Version :** `v1.0.1`\n** Plugins :** `{len(dugmeler)}`\n",
                     buttons=buttons,
                     link_preview=False,
@@ -351,7 +354,7 @@ with bot:
         )
         async def on_plug_in_callback_query_handler(event):
             if event.query.user_id == uid:
-                buttons = paginate_help(0, plugins, "helpme")
+                buttons = paginate_help(0, dugmeler, "helpme")
                 text = f"\n📚 **Inline Help Menu!**\n\n **Master​** {ALIVE_NAME}\n\n** Branch :** {UPSTREAM_REPO_BRANCH}\n** Version :** `v1.0.1`\n** Plugins :** `{len(dugmeler)}`\n",
                 await event.edit(
                     text,
